@@ -58,5 +58,7 @@ def main():
         tokens = split_token(user_input)
         do_setup(tokens)
 
+    print("You will exit.")
+
 
 main()
