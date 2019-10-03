@@ -15,15 +15,29 @@ def do_setup(tokens):
               'x+' : add_mult, 'cubes+' : add_cubes}
 
     command = tokens[0]
-    num1 = float(tokens[1])
-    num2 = float(tokens[2])
 
     # Look up the command that in the dictionary and run the arithetic function using the provided numbers. 
     if command in lookup:
-        print(lookup[command](num1,num2))
-    # If no such arithmetic function exists, print an error and exit our of the function.
+        token_len = len(tokens)
+        num1 = float(tokens[1])
+
+        # These two functions take in a single number.
+        if (command == "square" or command == "cube") and token_len > 1:
+            print(lookup[command](num1))
+
+        # This function takes in 3 numbers.
+        elif command == 'x+' and token_len > 3:
+            num2 = float(tokens[2])
+            num3 = float(tokens[3])
+            print(lookup[command](num1, num2, num3))
+
+        # All the other functions take in 2 numbers
+        elif token_len > 2:
+            num2 = float(tokens[2])
+            print(lookup[command](num1, num2,))
+
+    # If no such arithmetic function exists, exit out of the function.
     else:
-        print("That function is not one of your options.")
         return
 
 
@@ -35,8 +49,10 @@ def split_token(user_input):
 
 
 def main():
-    user_input = ""
 
+    user_input = "" # Set inital user_input to an empty string so while loop is run at least once. 
+
+    # Calculate user inputted arithmetic functions until the user enters q
     while user_input != "q":
         user_input = input("> ")
         tokens = split_token(user_input)
